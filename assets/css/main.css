@@ -1,6 +1,6 @@
 @import url("fontawesome-all.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,600,600italic");
-
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic|Open+Sans+Condensed:700");
 /*
 	Arcana by HTML5 UP
 	html5up.net | @ajlkn
@@ -112,11 +112,11 @@ input, select, textarea {
 		transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
 		color: #37c0fb;
 		text-decoration: none;
-		border-bottom: dotted 1px;
+		
 	}
 
 		a:hover {
-			color: #37c0fb;
+			color: #7c1f27;
 			border-bottom-color: transparent;
 		}
 
@@ -1962,7 +1962,7 @@ input, select, textarea {
 		color: #999;
 		font-size: 1.25em;
 		position: relative;
-		margin-top: -1.25em;
+		margin-top: 1em;
 		margin-bottom: 2.25em;
 	}
 
@@ -2181,10 +2181,10 @@ input, select, textarea {
 		list-style: disc;
 		padding-left: 1em;
 	}
-
-		ul li {
+	ul li {
 			padding-left: 0.5em;
 		}
+		
 
 /* Links */
 
@@ -2231,8 +2231,8 @@ input, select, textarea {
 		ul.menu li {
 			border-left: solid 1px #e0e0e0;
 			display: inline-block;
-			padding: 0 0 0 1em;
-			margin: 0 0 0 1em;
+			padding: 0 0 0 .75em;
+			margin: 0 0 0 .75em;
 		}
 
 			ul.menu li:first-child {
@@ -2415,7 +2415,7 @@ input, select, textarea {
 		background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
 		background-image: -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
 		background-image: linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
-		background-color: #37c0fb;
+		background-color: #7c1f27;
 		border-radius: 5px;
 		border: 0;
 		color: #fff;
@@ -2435,7 +2435,7 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: #50c8fc;
+			background-color: rgba(224, 153, 0, 0.95);
 			color: #fff !important;
 		}
 
@@ -2550,6 +2550,8 @@ input, select, textarea {
 				border: 0;
 			}
 
+
+			
 	#nav {
 		cursor: default;
 		background-color: #333;
@@ -2632,6 +2634,84 @@ input, select, textarea {
 					display: none;
 				}
 
+/* nav 2 */
+body {
+		padding-top: 3.25em;
+	}
+
+	.navbar {
+		position: sticky;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		background-color: rgba(224, 153, 0, 0.95);
+		background-image: url("images/overlay.png");
+		width: 100%;
+		height: 3.25em;
+		line-height: 3.25em;
+		text-align: center;
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-weight: 700;
+		text-transform: uppercase;
+		cursor: default;
+	}
+
+		.navbar ul {
+			position: relative;
+			z-index: 1001;
+		}
+
+		.navbar li {
+			font-size: 12pt;
+			display: inline-block;
+			margin: 0 0.5em 0 0.5em;
+			top: 0;
+			position: relative;
+			-moz-transition: top .15s ease-in-out;
+			-webkit-transition: top .15s ease-in-out;
+			-o-transition: top .15s ease-in-out;
+			-ms-transition: top .15s ease-in-out;
+			transition: top .15s ease-in-out;
+		}
+
+			.navbar li > ul {
+				display: none;
+			}
+
+			.navbar li a, .navbar li span {
+				-moz-transition: background-color .075s ease-in-out, color .075s ease-in-out;
+				-webkit-transition: background-color .075s ease-in-out, color .075s ease-in-out;
+				-ms-transition: background-color .075s ease-in-out, color .075s ease-in-out;
+				transition: background-color .075s ease-in-out, color .075s ease-in-out;
+				position: relative;
+				display: block;
+				text-decoration: none;
+				color: #7c1f27;
+				top: -6px;
+				padding: 6px 1.5em 0.25em 1.5em;
+				border-bottom-left-radius: 6px;
+				border-bottom-right-radius: 6px;
+				outline: 0;
+			}
+
+			.navbar li:hover, .navbar li.active {
+				top: 3px;
+			}
+
+			.navbar li:hover a, .navbar li:hover span {
+				background: #7c1f27;
+				color: #fff;
+			}
+
+			.navbar li.active a, .navbar li.active span {
+				background: #C1CAC5;
+				color: #fff;
+			}
+
+			.navbar li.current a {
+				background: #7c1f27;
+				color: #fff;
+			}
 /* Dropotron */
 
 	.dropotron {
@@ -2674,49 +2754,69 @@ input, select, textarea {
 /* Banner */
 
 	#banner {
-		background-image: url("../../images/banner.jpg");
-		background-position: center center;
-		background-size: cover;
-		height: 28em;
-		text-align: center;
 		position: relative;
+		background-color: #fff;
+		background-image: url("/images/banner2.jpeg"), url("https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?cs=srgb&dl=pexels-simon73-1323550.jpg&fm=jpg");
+		background-position: 50% 0%;
+		image-rendering: -webkit-optimize-contrast;
+		background-repeat: no-repeat;
+		background-size: 86% 90%, cover;
+		z-index: 1;
+		padding: 20em 0;
 	}
 
-		#banner header {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			background: #212121;
-			background: rgba(27, 27, 27, 0.75);
-			color: #fff;
-			padding: 1.5em 0;
+		#banner .content {
+			position: relative;
+			top: 80.5px;
+			background-color: #7c1f27;
+			background-image: url("images/overlay.png"), url("images/highlight.png");
+			background-position: top left, center center;
+			background-size: auto, 100% 250%;
+			background-repeat: repeat, no-repeat;
+			text-align: center;
+			margin: 0;
+			padding: 2em 0 2em 0;
 		}
 
-			#banner header h2 {
-				display: inline-block;
-				margin: 0;
-				font-size: 1.25em;
-				vertical-align: middle;
+			#banner .content h2 {
+				color: #fff;
+				font-size: 1.75em;
+				margin: 0 0 0.5em 0;
 			}
 
-				#banner header h2 em {
-					opacity: 0.75;
-				}
-
-				#banner header h2 a {
-					border-bottom-color: rgba(255, 255, 255, 0.5);
-				}
-
-					#banner header h2 a:hover {
-						border-bottom-color: transparent;
-					}
-
-			#banner header .button {
-				vertical-align: middle;
-				margin-left: 1em;
+			#banner .content p {
+				display: block;
+				font-weight: 700;
+				text-transform: uppercase;
+				color: #fff;
+				font-size: 1.35em;
+				margin: 0 0 1.25em 0;
 			}
 
+			#banner .content .button {
+				-moz-transition: border-color .2s ease-in-out, color .2s ease-in-out;
+				-webkit-transition: border-color .2s ease-in-out, color .2s ease-in-out;
+				-ms-transition: border-color .2s ease-in-out, color .2s ease-in-out;
+				transition: border-color .2s ease-in-out, color .2s ease-in-out;
+				color: rgba(224, 153, 0, 0.95);
+				background-color: #fff;
+				/* background: transparent !important; */
+				border: solid 4px #575d59;
+				border-color: rgba(224, 153, 0, 0.95);
+				font-size: 1.5em;
+			}
+
+				#banner .content .button:hover {
+					color: #e4e7e5;
+					border-color: #fff;
+					background-color: rgba(224, 153, 0, 0.95);
+					text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+				}
+
+				#banner .content .button:active {
+					color: #fff;
+					border-color: #616763;
+				}
 /* Wrapper */
 
 	.wrapper {
@@ -2736,7 +2836,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style3 {
-			background-color: #37c0fb;
+			background-color: #7c1f27;
 			background-image: -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
 			background-image: -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
 			background-image: -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,0.15)), url("images/bg01.png");
@@ -2750,7 +2850,7 @@ input, select, textarea {
 			}
 
 				.wrapper.style3 .button:hover {
-					color: #37c0fb !important;
+					color: #7c1f27 !important;
 				}
 
 /* CTA */
@@ -2783,7 +2883,7 @@ input, select, textarea {
 		}
 
 			#footer a:hover {
-				color: #37c0fb;
+				color: #7c1f27;
 				border-bottom-color: transparent;
 			}
 
