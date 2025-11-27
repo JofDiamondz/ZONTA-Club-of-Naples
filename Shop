@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Support Zonta Club of Naples</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <body class="is-preload">
+
+    <!-- Page Wrapper -->
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <header id="header">
+        <h1><a href="index.html">Zonta Club of Naples</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="scholarships.html">Scholarships</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="current"><a href="shop.html">Support Us</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main -->
+      <section id="main" class="container">
+        <header>
+          <h2>Support Zonta Club of Naples</h2>
+          <p>Make a donation, purchase event tickets, or buy merchandise to support women and girls in our community.</p>
+        </header>
+
+        <!-- Donations Section -->
+        <section class="box special">
+          <header class="major">
+            <h3>Make a Donation</h3>
+            <p>Your gift directly supports scholarships, service projects, and advocacy initiatives.</p>
+          </header>
+
+          <div class="row gtr-50 gtr-uniform">
+            <!-- $25 -->
+            <div class="col-4 col-12-mobile">
+              <section class="box">
+                <h4>$25 Supporter</h4>
+                <p>Helps fund local service projects and advocacy materials.</p>
+                <!-- You can later swap this for a specific $25 PayPal button -->
+                <a href="#" class="button primary fit">Donate $25</a>
+              </section>
+            </div>
+
+            <!-- $50 -->
+            <div class="col-4 col-12-mobile">
+              <section class="box">
+                <h4>$50 Advocate</h4>
+                <p>Supports educational programs and leadership opportunities.</p>
+                <!-- You can later swap this for a specific $50 PayPal button -->
+                <a href="#" class="button primary fit">Donate $50</a>
+              </section>
+            </div>
+
+            <!-- Custom amount with PayPal donate embed -->
+            <div class="col-4 col-12-mobile">
+              <section class="box">
+                <h4>Custom Amount</h4>
+                <p>Choose your own amount to invest in Zonta’s mission.</p>
+
+                <!-- PayPal Donate Button Embed -->
+                <div id="paypal-donate-button-container">
+                  <div id="paypal-donate-button"></div>
+                  <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+                  <script>
+                    PayPal.Donation.Button({
+                      env: 'production', // use 'sandbox' for testing
+                      hosted_button_id: 'YOUR_HOSTED_BUTTON_ID_HERE',
+                      image: {
+                        src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+                        alt: 'Donate with PayPal button',
+                        title: 'Donate with PayPal'
+                      }
+                    }).render('#paypal-donate-button');
+                  </script>
+                </div>
+                <!-- End PayPal Donate Button -->
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- Event Tickets Section -->
+        <section class="box">
+          <header class="major">
+            <h3>Purchase Event Tickets</h3>
+            <p>Attend our luncheons, fundraisers, and special events to support our work.</p>
+          </header>
+
+          <div class="row gtr-50 gtr-uniform">
+            <div class="col-6 col-12-mobile">
+              <section class="box">
+                <h4>Annual Fundraising Luncheon</h4>
+                <p>Date: TBD<br />
+                   Location: Naples, FL</p>
+                <p>Includes lunch, program, and networking with members and community partners.</p>
+                <!-- Later: embed a ticket purchase button here -->
+                <a href="#" class="button primary fit">Buy Ticket</a>
+              </section>
+            </div>
+
+            <div class="col-6 col-12-mobile">
+              <section class="box">
+                <h4>Special Event / Sponsorship</h4>
+                <p>Support as a sponsor or purchase tickets to a special event.</p>
+                <!-- Later: embed sponsorship payment buttons/links here -->
+                <a href="#" class="button fit">View Sponsorship Options</a>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- Merchandise Section -->
+        <section class="box">
+          <header class="major">
+            <h3>Merchandise</h3>
+            <p>Show your support with Zonta-branded items.</p>
+          </header>
+
+          <div class="row gtr-50 gtr-uniform">
+            <div class="col-4 col-12-mobile">
+              <section class="box">
+                <h4>Zonta T‑Shirt</h4>
+                <p>Color: Zonta Yellow<br />
+                   Size: S–XL</p>
+                <p><strong>$20.00</strong></p>
+                <!-- Later: embed a T-shirt payment button here -->
+                <a href="#" class="button fit">Add to Cart</a>
+              </section>
+            </div>
+
+            <div class="col-4 col-12-mobile">
+              <section class="box">
+                <h4>Tote Bag</h4>
+                <p>Reusable tote featuring the Zonta logo.</p>
+                <p><strong>$15.00</strong></p>
+                <!-- Later: embed a tote bag payment button here -->
+                <a href="#" class="button fit">Add to Cart</a>
+              </section>
+            </div>
+
+            <div class="col-4 col-12-mobile">
+              <section class="box">
+                <h4>Pin / Accessory</h4>
+                <p>Wearable Zonta pin to show your support.</p>
+                <p><strong>$10.00</strong></p>
+                <!-- Later: embed a pin payment button here -->
+                <a href="#" class="button fit">Add to Cart</a>
+              </section>
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <ul class="icons">
+          <!-- Add icons/links as needed to match other pages -->
+        </ul>
+        <ul class="copyright">
+          <li>&copy; Zonta Club of Naples. All rights reserved.</li>
+          <li>Design: HTML5 UP (Arcana)</li>
+        </ul>
+      </footer>
+
+    </div>
+
+    <!-- Scripts (match your other pages) -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <!-- Optional: your own e-commerce JS later -->
+    <!-- <script src="assets/js/shop.js"></script> -->
+
+  </body>
+</html>
