@@ -41,7 +41,36 @@
 
       <!-- Introduction Section -->
      <section id="banner">
-            
+                        <!-- Slideshow container -->
+      <br>
+      <div class="slideshow-container">
+
+  <!-- Full-width images with number and caption text -->
+        <div class="mySlides fade">
+    
+          <img src="Images/slideshow1.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+    
+          <img src="Images/donation.webp" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+    
+          <img src="Images/slideshow3.jpg" style="width:100%">
+        </div>
+
+      </div>
+<br>
+       
+<!-- The dots/circles -->
+      <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+
             <div class="content">
                 <h2>Zonta Club of Naples</h2>
           <p>Empowering women through service, advocacy, scholarships, and community impact.</p>
@@ -103,7 +132,7 @@
             <section class="col-6 col-12-narrower">
               <div class="box post">
                 <a href="events.html" class="image left">
-                  <img src="images/pic01.jpg" alt="Club luncheon event" loading="lazy" />
+                  <img src="images/event-calendar.png" alt="Club luncheon event" loading="lazy" />
                 </a>
                 <div class="inner">
                   <h3>Join Our Next Event</h3>
@@ -116,7 +145,7 @@
             <section class="col-6 col-12-narrower">
               <div class="box post">
                 <a href="scholarships.html" class="image left">
-                  <img src="images/pic02.jpg" alt="Scholarship celebration" loading="lazy" />
+                  <img src="images/scholarship-icon.webp" alt="Scholarship celebration" loading="lazy" />
                 </a>
                 <div class="inner">
                   <h3>Apply for Scholarships</h3>
@@ -213,5 +242,29 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- Slideshow Javascript -->
+    <script>
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  setTimeout(showSlides, 4000); // Change image every 4 seconds
+}
+</script>
+    
   </body>
 </html>
+
