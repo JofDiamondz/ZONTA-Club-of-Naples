@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Zonta Club of Naples - Payment</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <div id="header">
+        <h1 id="logo"><a href="index.html">Zonta Club of Naples</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="scholarships.html">Scholarships</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Main -->
+      <section class="wrapper style1">
+        <div class="container">
+          <div id="content">
+            <article>
+              <header class="major">
+                <h2>Payment Details (Demo)</h2>
+                <p>Enter your billing and payment information to complete this demo checkout.</p>
+              </header>
+
+              <!-- Order total (read from localStorage) -->
+              <section class="box">
+                <h3>Order Total</h3>
+                <p id="payment-total"><strong>Total: $0.00</strong></p>
+              </section>
+
+              <!-- Payment form -->
+              <section class="box">
+                <h3>Billing & Payment Information</h3>
+                <form id="payment-form">
+                  <div class="row gtr-50 gtr-uniform">
+                    <!-- Name -->
+                    <div class="col-6 col-12-mobilep">
+                      <label for="full-name">Full Name</label>
+                      <input type="text" name="full-name" id="full-name" required />
+                    </div>
+                    <!-- Email -->
+                    <div class="col-6 col-12-mobilep">
+                      <label for="email">Email</label>
+                      <input type="email" name="email" id="email" required />
+                    </div>
+
+                    <!-- Address -->
+                    <div class="col-12">
+                      <label for="address1">Address Line 1</label>
+                      <input type="text" name="address1" id="address1" required />
+                    </div>
+                    <div class="col-12">
+                      <label for="address2">Address Line 2 (Optional)</label>
+                      <input type="text" name="address2" id="address2" />
+                    </div>
+                    <div class="col-4 col-12-mobilep">
+                      <label for="city">City</label>
+                      <input type="text" name="city" id="city" required />
+                    </div>
+                    <div class="col-4 col-12-mobilep">
+                      <label for="state">State / Province</label>
+                      <input type="text" name="state" id="state" required />
+                    </div>
+                    <div class="col-4 col-12-mobilep">
+                      <label for="zip">ZIP / Postal Code</label>
+                      <input type="text" name="zip" id="zip" required />
+                    </div>
+                    <div class="col-12">
+                      <label for="country">Country</label>
+                      <input type="text" name="country" id="country" required />
+                    </div>
+
+                    <!-- Card info (demo only) -->
+                    <div class="col-8 col-12-mobilep">
+                      <label for="card-number">Card Number</label>
+                      <input type="text" name="card-number" id="card-number" maxlength="19" required />
+                    </div>
+                    <div class="col-2 col-6-mobilep">
+                      <label for="card-exp">Exp (MM/YY)</label>
+                      <input type="text" name="card-exp" id="card-exp" maxlength="5" required />
+                    </div>
+                    <div class="col-2 col-6-mobilep">
+                      <label for="card-cvv">CVV</label>
+                      <input type="text" name="card-cvv" id="card-cvv" maxlength="4" required />
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="col-12">
+                      <ul class="actions">
+                        <li><input type="submit" class="button primary" value="Complete Payment (Demo)" /></li>
+                        <li><a href="checkout.html" class="button alt">Back to Checkout</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </section>
+
+              <section class="box">
+                <p class="small">
+                  This is a simulated payment form for the Zonta Club of Naples project.
+                  No real charges are processed. Do not enter real credit card information.
+                </p>
+              </section>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer: copy same markup from store.html -->
+      <!-- ... -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Show total from checkout
+        const totalEl = document.getElementById('payment-total');
+        const saved = localStorage.getItem('zontaCart');
+        if (saved) {
+          try {
+            const cart = JSON.parse(saved);
+            let total = 0;
+            cart.forEach(item => {
+              total += item.price * item.qty;
+            });
+            totalEl.innerHTML = '<strong>Total: $' + total.toFixed(2) + '</strong>';
+          } catch (e) {
+            // leave default total
+          }
+        }
+
+        // Demo submit handler
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', e => {
+          e.preventDefault();
+
+          alert(
+            'Thank you! This is a demo payment only. In a real site, your information would be sent securely to a payment processor.'
+          );
+
+          // Clear stored cart and optionally form
+          localStorage.removeItem('zontaCart');
+          form.reset();
+
+          // Redirect to a simple thank-you or home
+          window.location.href = 'index.html';
+        });
+      });
+    </script>
+  </body>
+</html>
