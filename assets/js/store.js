@@ -1,35 +1,37 @@
-// Simple front-end demo cart (no real payments)
-// This file should be saved as assets/js/store.js
+// Simple front-end demo cart with drawer and count
 
-const cart = [];
+let cart = [];
 
 function renderCart() {
   const cartItemsEl = document.getElementById('cart-items');
   const cartTotalEl = document.getElementById('cart-total');
+  const cartCountEl = document.getElementById('cart-count');
 
-  if (!cartItemsEl || !cartTotalEl) {
-    return;
-  }
+  if (!cartItemsEl || !cartTotalEl || !cartCountEl) return;
 
   if (!cart.length) {
     cartItemsEl.innerHTML =
-      '<p class="small">No items yet. Add something from the store above.</p>';
+      '<p class="small">No items yet. Add something from the store.</p>';
     cartTotalEl.innerHTML = '<strong>Total: $0.00</strong>';
+    cartCountEl.textContent = '0';
     return;
   }
 
   let html = '<ul class="small">';
   let total = 0;
+  let count = 0;
 
   cart.forEach(item => {
     const lineTotal = item.price * item.qty;
     total += lineTotal;
+    count += item.qty;
     html += `<li>${item.name} (x${item.qty}) - $${lineTotal.toFixed(2)}</li>`;
   });
 
   html += '</ul>';
   cartItemsEl.innerHTML = html;
   cartTotalEl.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
+  cartCountEl.textContent = String(count);
 }
 
 function addToCart(name, price) {
@@ -42,26 +44,55 @@ function addToCart(name, price) {
   renderCart();
 }
 
+function openCartDrawer() {
+  const drawer = document.getElementById('cart-drawer');
+  if (drawer) drawer.classList.add('open');
+}
+
+function closeCartDrawer() {
+  const drawer = document.getElementById('cart-drawer');
+  if (drawer) drawer.classList.remove('open');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Hook up all "Add to Cart" buttons
+  // Add-to-cart buttons
   document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', () => {
       const name = btn.dataset.name;
       const price = btn.dataset.price;
       addToCart(name, price);
+      openCartDrawer();
     });
   });
 
-  // Demo checkout button
+  // Cart icon open
+  const cartIcon = document.getElementById('cart-icon');
+  if (cartIcon) {
+    cartIcon.addEventListener('click', openCartDrawer);
+  }
+
+  // Close button
+  const closeBtn = document.getElementById('close-cart');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeCartDrawer);
+  }
+
+  // Mock checkout
   const checkoutBtn = document.getElementById('checkout-button');
   if (checkoutBtn) {
     checkoutBtn.addEventListener('click', () => {
+      if (!cart.length) {
+        alert('Your cart is empty.');
+        return;
+      }
       alert(
-        'This is a demo checkout. In a live site, this would redirect to a secure payment provider.'
+        'Demo checkout complete. In a real site, this would redirect to Stripe or PayPal for secure payment.'
       );
+      cart = [];
+      renderCart();
+      closeCartDrawer();
     });
   }
 
-  // Initial render
   renderCart();
 });
