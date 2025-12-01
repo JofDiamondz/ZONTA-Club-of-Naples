@@ -27,6 +27,56 @@
     .selected { outline: 3px solid #f0b429; }
     h1.page-title { font-size: 1.8rem; margin: 1.5rem 0 .5rem; }
     p.page-subtitle { margin: 0 0 1rem; color: #555; }
+
+    /* Make tier card Join buttons longer (full width inside the card) */
+    .tier-card .btn { display: block; width: 100%; padding: .6rem 1rem; text-align: center; }
+
+    /* Make the form submit button a bit longer */
+    .actions .btn { min-width: 260px; padding: .6rem 1rem; }
+    @media (max-width: 800px){ .actions .btn { width: 100%; min-width: 0; } }
+
+    /* Yellow outlined custom checkbox for terms (accessible pattern) */
+    .terms-label { position: relative; display: inline-block; padding-left: 1.9rem; cursor: pointer; user-select: none; }
+    .terms-label .terms-text { vertical-align: middle; }
+    .terms-label input[type="checkbox"] {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.25rem;
+      height: 1.25rem;
+      margin: 0;
+      opacity: 0;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .terms-label .custom-check {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid #ffd24d; /* yellow outline */
+      border-radius: 4px;
+      background: #fff;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+    .terms-label input[type="checkbox"]:focus + .custom-check {
+      box-shadow: 0 0 0 4px rgba(255,210,77,0.18);
+    }
+    .terms-label input[type="checkbox"]:checked + .custom-check::after {
+      content: '✔';
+      color: #b30000;
+      font-size: 1rem;
+      line-height: 1;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
   </style>
   <script>
     // Utility to get query parameter
@@ -180,22 +230,22 @@
     <div id="header">
       <!-- Logo -->
       <h1 id="logo"><a href="index.html">Zonta Club of Naples</a></h1>
-
-      <!-- Nav -->
-      <nav id="nav">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li class="current"><a href="membership.html">Membership</a></li>
-          <li><a href="scholarships.html">Scholarships</a></li>
-          <li><a href="events.html">Events</a></li>
-          <li><a href="store.html">Store</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
     </div>
+
+    <!-- Nav -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="current"><a href="membership.html">Membership</a></li>
+        <li><a href="scholarships.html">Scholarships</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="store.html">Store</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
 
   <section>
     <div class="container">
@@ -285,9 +335,10 @@
 
       <div class="row single">
         <div>
-          <label>
+          <label class="terms-label">
             <input id="terms" name="terms" type="checkbox" required>
-            I accept the <a href="#" onclick="alert('Add your terms URL or modal.');return false;">terms and conditions</a> *
+            <span class="custom-check" aria-hidden="true"></span>
+            <span class="terms-text">I accept the <a href="#" onclick="alert('Add your terms URL or modal.');return false;">terms and conditions</a> *</span>
           </label>
           <div id="termsError" class="error" aria-live="polite"></div>
         </div>
