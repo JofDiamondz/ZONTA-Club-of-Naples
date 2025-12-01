@@ -77,22 +77,25 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', closeCartDrawer);
   }
 
-  // Mock checkout
-  const checkoutBtn = document.getElementById('checkout-button');
-  if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
-      if (!cart.length) {
-        alert('Your cart is empty.');
-        return;
-      }
-      alert(
-        'Demo checkout complete. In a real site, this would redirect to Stripe or PayPal for secure payment.'
-      );
-      cart = [];
-      renderCart();
-      closeCartDrawer();
-    });
-  }
+// Mock checkout
+const checkoutBtn = document.getElementById('checkout-button');
+if (checkoutBtn) {
+  checkoutBtn.addEventListener('click', () => {
+    if (!cart.length) {
+      alert('Your cart is empty.');
+      return;
+    }
 
-  renderCart();
-});
+    // Save cart to localStorage for the next page
+    localStorage.setItem('zontaCart', JSON.stringify(cart));
+
+    // Clear current cart UI
+    cart = [];
+    renderCart();
+    closeCartDrawer();
+
+    // Go to local checkout / payment step
+    window.location.href = 'checkout.html';
+  });
+}
+
