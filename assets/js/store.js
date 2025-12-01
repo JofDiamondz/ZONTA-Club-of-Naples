@@ -77,25 +77,28 @@ document.addEventListener('DOMContentLoaded', () => {
     closeBtn.addEventListener('click', closeCartDrawer);
   }
 
-// Mock checkout
-const checkoutBtn = document.getElementById('checkout-button');
-if (checkoutBtn) {
-  checkoutBtn.addEventListener('click', () => {
-    if (!cart.length) {
-      alert('Your cart is empty.');
-      return;
-    }
+  // Mock checkout -> local checkout page
+  const checkoutBtn = document.getElementById('checkout-button');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      if (!cart.length) {
+        alert('Your cart is empty.');
+        return;
+      }
 
-    // Save cart to localStorage for the next page
-    localStorage.setItem('zontaCart', JSON.stringify(cart));
+      // Save cart to localStorage for the next page
+      localStorage.setItem('zontaCart', JSON.stringify(cart));
 
-    // Clear current cart UI
-    cart = [];
-    renderCart();
-    closeCartDrawer();
+      // Clear current cart UI
+      cart = [];
+      renderCart();
+      closeCartDrawer();
 
-    // Go to local checkout / payment step
-    window.location.href = 'checkout.html';
-  });
-}
+      // Go to local checkout / payment step
+      window.location.href = 'checkout.html';
+    });
+  }
 
+  // Initial render
+  renderCart();
+});
