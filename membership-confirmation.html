@@ -1,0 +1,157 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome — Membership Submitted</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <meta name="description" content="Membership application received">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+  <style>
+    /* Page-specific styles */
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; text-align: center; }
+    h1 { font-size: 2rem; margin-bottom: .5rem; }
+    p.lead { color: #444; margin-top: 0; }
+    .contact { margin-top: 1.25rem; font-size: 0.95rem; color: #333; }
+    .btn { display: inline-block; padding: .6rem 1rem; background:#f0b429; color:#111; border-radius:4px; text-decoration:none; }
+    /* Confetti canvas covers the page */
+    #confetti-canvas { position: fixed; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+    /* Small animation hint */
+    .subtle { opacity: .9; }
+  </style>
+</head>
+<body class="is-preload">
+  <div id="page-wrapper">
+    <div id="header">
+      <h1 id="logo"><a href="index.html">Zonta Club of Naples</a></h1>
+      <nav id="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="scholarships.html">Scholarships</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="store.html">Store</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <main class="container">
+      <canvas id="confetti-canvas"></canvas>
+      <h1 id="welcomeHeading">Welcome to Zonta Club of Naples!</h1>
+      <p class="lead">Thank you — your membership application has been received.</p>
+      <p class="subtle">We're excited to welcome you to our community. You'll receive an email shortly with next steps and additional information about your membership.</p>
+
+      <div class="contact">
+        <p>If you have any questions, please contact us at <a href="mailto:info@zonta-naples.org">info@zonta-naples.org</a> or call <a href="tel:+19738647087">(973) 864-7087</a>.</p>
+        <p class="small">We'll be in touch by email; if you need immediate help, call the number above.</p>
+      </div>
+
+      <p style="margin-top:1.5rem;"><a class="btn" href="index.html">Return to home</a></p>
+    </main>
+
+  </div>
+
+  <script>
+    // Simple confetti implementation (no external libs). Red confetti falling from top.
+    (function(){
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+      const pieces = [];
+      const COLORS = ['#c62828','#e53935','#ef5350','#b71c1c']; // reds
+      const NUM = Math.floor(Math.min(160, width / 6));
+
+      function rand(min,max){ return Math.random()*(max-min)+min; }
+
+      function resize(){ width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+      window.addEventListener('resize', resize);
+
+      function Piece(){
+        this.x = rand(0,width);
+        this.y = rand(-height,0);
+        this.w = rand(6,12);
+        this.h = rand(8,18);
+        this.angle = rand(0,2*Math.PI);
+        this.speed = rand(40,120); // pixels per second
+        this.spin = rand(-3,3);
+        this.color = COLORS[Math.floor(rand(0,COLORS.length))];
+        this.opacity = rand(0.7,1);
+        this.t = rand(0,1000);
+      }
+
+      Piece.prototype.update = function(dt){
+        this.t += dt;
+        this.y += this.speed * dt;
+        this.angle += this.spin * dt;
+        // sway
+        this.x += Math.sin(this.t*2) * 0.6;
+        if(this.y - this.h > height){
+          this.y = rand(-height*0.3,0);
+          this.x = rand(0,width);
+        }
+      }
+
+      Piece.prototype.draw = function(ctx){
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+        ctx.restore();
+      }
+
+      function init(){
+        for(let i=0;i<NUM;i++) pieces.push(new Piece());
+        last = performance.now();
+        requestAnimationFrame(loop);
+      }
+
+      let last = 0;
+      let running = true;
+      function loop(now){
+        const dt = Math.min(0.05, (now-last)/1000);
+        last = now;
+        ctx.clearRect(0,0,width,height);
+        for(let i=0;i<pieces.length;i++){
+          pieces[i].update(dt);
+          pieces[i].draw(ctx);
+        }
+        if(running) requestAnimationFrame(loop);
+      }
+
+      // Auto-stop confetti after 10 seconds to reduce CPU use
+      init();
+      // Keep confetti active for 30 seconds (user requested longer animation)
+      setTimeout(function(){ running = false; ctx.clearRect(0,0,width,height); }, 30000);
+    })();
+  </script>
+  <script>
+    // Personalize welcome using the stored first name (set by signup page). This is optional and local-only.
+    (function(){
+      try{
+        var name = sessionStorage.getItem('newMemberFirstName');
+        if(name){
+          name = name.trim();
+          if(name.length){
+            var h = document.getElementById('welcomeHeading');
+            if(h){ h.textContent = 'Welcome, ' + name + '!'; }
+            // Clear the stored name after use to avoid stale values.
+            sessionStorage.removeItem('newMemberFirstName');
+          }
+        }
+      }catch(e){ /* ignore storage errors */ }
+    })();
+  </script>
+</body>
+</html>

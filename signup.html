@@ -1,0 +1,305 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join – Membership Signup</title>
+  <!-- Use the site's main stylesheet first so header/nav match other pages -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/custom.css">
+  <meta name="description" content="Join our membership program">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+  <style>
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+    .tier-grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin: 2rem 0; }
+    @media (max-width: 800px){ .tier-grid { grid-template-columns: 1fr; } }
+    .tier-card { border: 1px solid #ddd; border-radius: 6px; padding: 1rem; background:#fff; }
+    .tier-card h3 { margin-top: 0; }
+    .tier-card .small { font-size: .95rem; color: #555; }
+    .tier-card button { margin-top: .5rem; }
+    .badge { background:#eee; border-radius:999px; padding:.2rem .6rem; font-size:.85rem; }
+    /* Uniform images on cards */
+    .tier-image { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; display:block; }
+    .selected { outline: 3px solid #f0b429; }
+    h1.page-title { font-size: 1.8rem; margin: 1.5rem 0 .5rem; }
+    p.page-subtitle { margin: 0 0 1rem; color: #555; }
+  </style>
+  <script>
+    // Utility to get query parameter
+    function getParam(name){
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    document.addEventListener('DOMContentLoaded', function(){
+      const tierParam = (getParam('tier')||'').toLowerCase();
+      // Map incoming URL to internal selection
+      function mapParamToSelection(p){
+        switch(p){
+          case 'highschool': return 'highschool';
+          case 'college': return 'college';
+          case 'student': return 'highschool'; // default student view
+          case 'member': return 'member';
+          default: return 'member';
+        }
+      }
+      const selection = mapParamToSelection(tierParam);
+
+      const tierLabel = document.getElementById('tierLabel');
+      const tierInput = document.getElementById('tier');
+      const studentTypeInput = document.getElementById('studentType');
+
+      function labelFor(sel){
+        if(sel === 'highschool') return 'High School Student';
+        if(sel === 'college') return 'College Student';
+        return 'Member';
+      }
+
+      function selectTier(sel){
+        // Normalize hidden fields
+        if(sel === 'highschool' || sel === 'college'){
+          tierInput.value = 'student';
+          studentTypeInput.value = sel;
+        } else {
+          tierInput.value = 'member';
+          studentTypeInput.value = '';
+        }
+        // Update label
+        tierLabel.textContent = labelFor(sel);
+        // Highlight selected card
+        document.querySelectorAll('.tier-card').forEach(function(card){ card.classList.remove('selected'); });
+        const activeId = sel === 'member' ? 'card-member' : (sel === 'college' ? 'card-college' : 'card-highschool');
+        const active = document.getElementById(activeId);
+        if(active){ active.classList.add('selected'); }
+        // Scroll to form
+        const form = document.getElementById('signupForm');
+        if(form){ form.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      }
+
+      // Hook up tier buttons
+      const btnHighSchool = document.getElementById('chooseHighSchool');
+      const btnCollege = document.getElementById('chooseCollege');
+      const btnMember = document.getElementById('chooseMember');
+      if(btnHighSchool) btnHighSchool.addEventListener('click', function(e){ e.preventDefault(); selectTier('highschool'); });
+      if(btnCollege) btnCollege.addEventListener('click', function(e){ e.preventDefault(); selectTier('college'); });
+      if(btnMember) btnMember.addEventListener('click', function(e){ e.preventDefault(); selectTier('member'); });
+
+      // Preselect from URL
+      selectTier(selection);
+
+      const form = document.getElementById('signupForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const terms = document.getElementById('terms');
+      const termsError = document.getElementById('termsError');
+
+      // Clear inline terms error when user toggles checkbox
+      terms.addEventListener('change', function(){
+        termsError.textContent = '';
+      });
+
+      // Custom validation + error popup
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+
+        const errors = [];
+        const invalidFields = [];
+
+        function requireField(input, label){
+          if(!input.value.trim()){
+            errors.push(label + ' is required.');
+            invalidFields.push(input);
+          }
+        }
+
+        // Required checks
+        requireField(firstName, 'First Name');
+        requireField(lastName, 'Last Name');
+        requireField(email, 'Email');
+        requireField(phone, 'Phone');
+
+        // Format checks (only if provided)
+        if(email.value.trim() && !email.checkValidity()){
+          errors.push('Please enter a valid email address.');
+          invalidFields.push(email);
+        }
+        if(phone.value.trim() && !phone.checkValidity()){
+          errors.push('Please enter a valid phone number.');
+          invalidFields.push(phone);
+        }
+
+        // Terms check
+        if(!terms.checked){
+          errors.push('You must accept the terms and conditions to continue.');
+          termsError.textContent = 'You must accept the terms and conditions to continue.';
+          invalidFields.push(terms);
+        } else {
+          termsError.textContent = '';
+        }
+
+        if(errors.length){
+          // Show one popup with all issues
+          alert('Please fix the following before submitting:\n\n- ' + errors.join('\n- '));
+          // Trigger browser to show built-in cues as well
+          if(form.reportValidity) form.reportValidity();
+          // Focus first invalid
+          const first = invalidFields[0];
+          if(first){
+            if(first.focus) first.focus();
+            // If terms (checkbox) is the first invalid, scroll it into view
+            first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          return;
+        }
+
+        // Redirect to the membership confirmation page after successful client-side validation.
+        // If you implement a backend, replace this with an actual POST + redirect on success.
+        // Small timeout ensures any screen-reader announcement completes before navigation.
+        // Store the first name briefly so the confirmation page can personalize the message (no PII is sent to a server).
+        try{
+          sessionStorage.setItem('newMemberFirstName', firstName.value.trim());
+        }catch(e){ /* ignore storage errors */ }
+        setTimeout(function(){
+          window.location.href = 'membership-confirmation.html';
+        }, 250);
+      });
+    });
+  </script>
+</head>
+<body class="is-preload">
+  <div id="page-wrapper">
+
+    <!-- Header (Arcana layout) -->
+    <div id="header">
+      <!-- Logo -->
+      <h1 id="logo"><a href="index.html">Zonta Club of Naples</a></h1>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li class="current"><a href="membership.html">Membership</a></li>
+          <li><a href="scholarships.html">Scholarships</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="store.html">Store</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+  <section>
+    <div class="container">
+      <h1 class="page-title">Join Now <span class="badge" aria-live="polite"><span id="tierLabel">Member</span></span></h1>
+      <p class="page-subtitle">Choose your membership type, then fill out the form below. Fields marked with * are required.</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Tier chooser in a three-column layout -->
+    <section aria-labelledby="chooseTierTitle">
+      <h2 id="chooseTierTitle">Choose your membership</h2>
+      <div class="tier-grid">
+        <article id="card-highschool" class="tier-card" tabindex="0">
+          <img class="tier-image" src="images/Zonta Club of Naples-20251130T210952Z-1-001/Zonta Club of Naples/image3.jpeg" alt="High school students volunteering">
+          <h3>High School</h3>
+          <p class="small">Build leadership and serve the community. Volunteer opportunities, service projects, and mentorship.</p>
+          <ul class="small">
+            <li>Service hours & leadership experience</li>
+            <li>Networking with local leaders</li>
+            <li>Scholarship awareness & workshops</li>
+          </ul>
+          <p><button id="chooseHighSchool" class="btn">Join</button></p>
+        </article>
+
+        <article id="card-college" class="tier-card" tabindex="0">
+          <img class="tier-image" src="images/Zonta Club of Naples-20251130T210952Z-1-001/Zonta Club of Naples/Scholarship3.jpeg" alt="College student scholarship">
+          <h3>College / Young Professional</h3>
+          <p class="small">Serve, develop skills, and build a purpose-driven network early in your career.</p>
+          <ul class="small">
+            <li>Mentorship & leadership roles</li>
+            <li>Professional development</li>
+            <li>Project coordination experience</li>
+          </ul>
+          <p><button id="chooseCollege" class="btn">Join</button></p>
+        </article>
+
+        <article id="card-member" class="tier-card" tabindex="0">
+          <img class="tier-image" src="images/Zonta Club of Naples-20251130T210952Z-1-001/Zonta Club of Naples/Copy of IMG_6707.jpg" alt="Zonta Club of Naples members group">
+          <h3>Regular Membership</h3>
+          <p class="small">Support scholarships, advocacy, and local service initiatives as part of a global mission.</p>
+          <ul class="small">
+            <li>Lead & support service projects</li>
+            <li>Advocacy & community impact</li>
+            <li>Local & international connections</li>
+          </ul>
+          <p><button id="chooseMember" class="btn">Join</button></p>
+        </article>
+      </div>
+    </section>
+
+    <form id="signupForm" novalidate>
+      <!-- Readonly selected tier -->
+      <input type="hidden" id="tier" name="tier" value="member">
+      <input type="hidden" id="studentType" name="studentType" value="">
+
+      <div class="row">
+        <div>
+          <label for="firstName">First Name *</label>
+          <input id="firstName" name="firstName" type="text" autocomplete="given-name" required>
+        </div>
+        <div>
+          <label for="lastName">Last Name *</label>
+          <input id="lastName" name="lastName" type="text" autocomplete="family-name" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div>
+          <label for="phone">Phone *</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required pattern="^[+]?[-0-9 ()]{7,}$" title="Enter a valid phone number">
+          <div class="hint">Include area code. Formats like 239-555-0123 are accepted.</div>
+        </div>
+      </div>
+
+
+      <div class="row single">
+        <div>
+          <label for="address">Address (optional)</label>
+          <input id="address" name="address" type="text" autocomplete="street-address" placeholder="Street address, apartment, suite, etc.">
+        </div>
+      </div>
+
+      <div class="row single">
+        <div>
+          <label>
+            <input id="terms" name="terms" type="checkbox" required>
+            I accept the <a href="#" onclick="alert('Add your terms URL or modal.');return false;">terms and conditions</a> *
+          </label>
+          <div id="termsError" class="error" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="submitBtn" type="submit" class="btn">Submit</button>
+      </div>
+    </form>
+  </main>
+
+    <script src="js/app.js"></script>
+  </div>
+</body>
+</html>

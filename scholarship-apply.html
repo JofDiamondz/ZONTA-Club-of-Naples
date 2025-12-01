@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<!-- Zonta Club of Naples — Scholarship Application (online) -->
+<html>
+  <head>
+    <title>Zonta Club of Naples - Scholarship Application</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    <style>
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+      .section-card { border: 1px solid #ddd; border-radius: 6px; padding: 1.25rem; background: #fff; margin-bottom: 1.25rem; }
+      .section-card h3 { margin: 0 0 .75rem; }
+      form .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+      form .row.single { grid-template-columns: 1fr; }
+      @media (max-width: 800px){ form .row { grid-template-columns: 1fr; } }
+      label { font-weight: 600; display: block; margin-bottom: .35rem; }
+      input, select, textarea { width: 100%; }
+      .hint { font-size: .9rem; color: #666; }
+      .count { font-size: .9rem; color: #666; margin-top: .25rem; }
+      .error { color: #7A1E27; margin-top: .25rem; }
+      .actions { margin-top: 1rem; }
+
+      /* Remove custom trigger buttons — native select/date controls open when clicked */
+      .control-with-trigger { /* kept for semantic grouping; no extra styles */ }
+      .control-with-trigger .with-trigger { padding-right: 0; }
+
+      /* Align action buttons to the right (bar) */
+      .section-card .actions { display: flex; justify-content: flex-end; gap: .5rem; align-items: center; padding-top: .5rem; }
+
+      /* Custom visible checkbox: yellow outline; red check when selected.
+         The native input remains accessible but visually hidden/overlayed. */
+      .terms-label { position: relative; display: inline-block; padding-left: 1.9rem; cursor: pointer; user-select: none; }
+      .terms-label .terms-text { vertical-align: middle; }
+      /* native checkbox stays focusable/clickable but invisible and overlays the custom box */
+      .terms-label input[type="checkbox"] {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.25rem;
+        height: 1.25rem;
+        margin: 0;
+        opacity: 0;
+        z-index: 2;
+        cursor: pointer;
+      }
+      /* visible custom square */
+      .terms-label .custom-check {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 2px solid #ffd24d; /* yellow outline */
+        border-radius: 4px;
+        background: #fff;
+        box-sizing: border-box;
+        z-index: 1;
+      }
+      /* Focus indication when keyboard focusing the native checkbox */
+      .terms-label input[type="checkbox"]:focus + .custom-check {
+        box-shadow: 0 0 0 4px rgba(255,210,77,0.18);
+      }
+      /* Red checkmark when checked */
+      .terms-label input[type="checkbox"]:checked + .custom-check::after {
+        content: '✔';
+        color: #b30000;
+        font-size: 1rem;
+        line-height: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Ensure the date control row looks clickable on desktop */
+      .dob-control { cursor: pointer; }
+      .dob-control input[type="date"] { cursor: text; }
+    </style>
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+
+      <div id="header">
+        <h1 id="logo"><a href="index.html">Zonta Club of Naples</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li class="current"><a href="scholarships.html">Scholarships</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Anchor so external "Download Application" buttons can link here: #online-application-form -->
+      <section class="wrapper style1" id="online-application-form">
+        <div class="container">
+          <header class="major">
+            <h2>Scholarship Application</h2>
+            <!-- Removed previous / alternate instructions. Use this form to apply online. -->
+            <p>Please complete this online application. Essays must be at least 200 words each.</p>
+          </header>
+
+          <form id="scholarshipForm" novalidate>
+            <!-- Applicant Information -->
+            <section class="section-card" aria-labelledby="applicantInfo">
+              <h3 id="applicantInfo">Applicant Information</h3>
+              <div class="row">
+                <div>
+                  <label for="firstName">First Name *</label>
+                  <input id="firstName" name="firstName" type="text" required autocomplete="given-name" />
+                </div>
+                <div>
+                  <label for="lastName">Last Name *</label>
+                  <input id="lastName" name="lastName" type="text" required autocomplete="family-name" />
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label for="preferredName">Preferred Name (optional)</label>
+                  <input id="preferredName" name="preferredName" type="text" autocomplete="nickname" />
+                </div>
+                <!-- make the DOB container clickable to open the native calendar -->
+                <div class="control-with-trigger dob-control" aria-labelledby="dobLabel">
+                  <!-- make label focusable for keyboard users -->
+                  <label id="dobLabel" for="dob" tabindex="0">Date of Birth *</label>
+                  <input id="dob" name="dob" type="date" required class="with-trigger" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="control-with-trigger">
+                  <label for="gender">Gender *</label>
+                  <select id="gender" name="gender" required class="with-trigger">
+                    <option value="">Select</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Prefer not to disclose</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="phone">Phone *</label>
+                  <input id="phone" name="phone" type="tel" required pattern="^[+]?[-0-9 ()]{7,}$" title="Enter a valid phone number" autocomplete="tel" />
+                  <div class="hint">Include area code (e.g., 239-555-0123).</div>
+                </div>
+              </div>
+              <div class="row single">
+                <div>
+                  <label for="email">Email *</label>
+                  <input id="email" name="email" type="email" required autocomplete="email" />
+                </div>
+              </div>
+              <div class="row single">
+                <div>
+                  <label for="address">Address *</label>
+                  <input id="address" name="address" type="text" required autocomplete="street-address" />
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label for="city">City *</label>
+                  <input id="city" name="city" type="text" required autocomplete="address-level2" />
+                </div>
+                <div class="control-with-trigger">
+                  <label for="state">State *</label>
+                  <select id="state" name="state" required class="with-trigger"></select>
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label for="zip">ZIP Code *</label>
+                  <input id="zip" name="zip" type="text" required pattern="^\d{5}(?:-\d{4})?$" title="Enter a 5-digit ZIP or ZIP+4" autocomplete="postal-code" />
+                </div>
+                <div></div>
+              </div>
+            </section>
+
+            <!-- School Information -->
+            <section class="section-card" aria-labelledby="schoolInfo">
+              <h3 id="schoolInfo">School Information</h3>
+              <div class="row">
+                <div>
+                  <label for="college">College Name *</label>
+                  <input id="college" name="college" type="text" required />
+                </div>
+                <div>
+                  <label for="degree">Degree *</label>
+                  <input id="degree" name="degree" type="text" required placeholder="e.g., B.S., A.A., Certificate" />
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label for="major">Major *</label>
+                  <input id="major" name="major" type="text" required />
+                </div>
+                <div>
+                  <label for="gpa">GPA *</label>
+                  <input id="gpa" name="gpa" type="number" min="0" max="4.0" step="0.01" required />
+                </div>
+              </div>
+              <div class="row">
+                <div>
+                  <label for="startMonth">Start Term (Month & Year) *</label>
+                  <div class="row" style="grid-template-columns: 1fr 2.5rem 1fr 2.5rem; align-items:center;">
+                    <div class="control-with-trigger">
+                      <select id="startMonth" name="startMonth" required class="with-trigger"></select>
+                    </div>
+                    <span aria-hidden="true"></span>
+                    <div class="control-with-trigger">
+                      <select id="startYear" name="startYear" required class="with-trigger"></select>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label for="gradMonth">Expected Graduation (Month & Year) *</label>
+                  <div class="row" style="grid-template-columns: 1fr 2.5rem 1fr 2.5rem; align-items:center;">
+                    <div class="control-with-trigger">
+                      <select id="gradMonth" name="gradMonth" required class="with-trigger"></select>
+                    </div>
+                    <span aria-hidden="true"></span>
+                    <div class="control-with-trigger">
+                      <select id="gradYear" name="gradYear" required class="with-trigger"></select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Essays -->
+            <section class="section-card" aria-labelledby="essays">
+              <h3 id="essays">Essays</h3>
+              <div class="row single">
+                <div>
+                  <label for="essay1">What challenge have you faced or seen others faced as a woman in modern day society? (min 200 words) *</label>
+                  <textarea id="essay1" name="essay1" rows="8" required></textarea>
+                  <div class="count" id="essay1Count" aria-live="polite">0 words</div>
+                </div>
+              </div>
+              <div class="row single">
+                <div>
+                  <label for="essay2">Where do you see yourself in the next couple of years and in the long-term? (min 200 words) *</label>
+                  <textarea id="essay2" name="essay2" rows="8" required></textarea>
+                  <div class="count" id="essay2Count" aria-live="polite">0 words</div>
+                </div>
+              </div>
+              <div class="hint">Tip: You can draft in a separate document, then paste here.</div>
+            </section>
+
+            <!-- Terms -->
+            <section class="section-card">
+              <label class="terms-label">
+                <input id="terms" name="terms" type="checkbox" required />
+                <span class="custom-check" aria-hidden="true"></span>
+                <span class="terms-text">I accept the <a href="#" onclick="alert('Replace with your terms URL or modal.');return false;">terms and conditions</a> *</span>
+              </label>
+              <div id="termsError" class="error" aria-live="polite"></div>
+              <div class="actions">
+                <button type="submit" class="button primary">Submit Application</button>
+              </div>
+            </section>
+          </form>
+        </div>
+      </section>
+
+      <!-- Footer (same as others) -->
+      <div id="footer">
+        <div class="container">
+          <div class="row">
+            <section class="col-3 col-6-narrower col-12-mobilep">
+              <h3>Links to Stuff</h3>
+              <ul class="links">
+                <li><a href="#">Mattis et quis rutrum</a></li>
+                <li><a href="#">Suspendisse amet varius</a></li>
+                <li><a href="#">Sed et dapibus quis</a></li>
+                <li><a href="#">Rutrum accumsan dolor</a></li>
+                <li><a href="#">Mattis rutrum accumsan</a></li>
+                <li><a href="#">Suspendisse varius nibh</a></li>
+                <li><a href="#">Sed et dapibus mattis</a></li>
+              </ul>
+            </section>
+            <section class="col-3 col-6-narrower col-12-mobilep">
+              <h3>More Links to Stuff</h3>
+              <ul class="links">
+                <li><a href="#">Duis neque nisi dapibus</a></li>
+                <li><a href="#">Sed et dapibus quis</a></li>
+                <li><a href="#">Rutrum accumsan sed</a></li>
+                <li><a href="#">Mattis et sed accumsan</a></li>
+                <li><a href="#">Duis neque nisi sed</a></li>
+                <li><a href="#">Sed et dapibus quis</a></li>
+                <li><a href="#">Rutrum amet varius</a></li>
+              </ul>
+            </section>
+            <section class="col-6 col-12-narrower">
+              <h3>Get In Touch</h3>
+              <form>
+                <div class="row gtr-50">
+                  <div class="col-6 col-12-mobilep">
+                    <input type="text" name="name" id="name" placeholder="Name" />
+                  </div>
+                  <div class="col-6 col-12-mobilep">
+                    <input type="email" name="email" id="email" placeholder="Email" />
+                  </div>
+                  <div class="col-12">
+                    <textarea name="message" id="message" placeholder="Message" rows="5"></textarea>
+                  </div>
+                  <div class="col-12">
+                    <ul class="actions">
+                      <li><input type="submit" class="button alt" value="Send Message" /></li>
+                    </ul>
+                  </div>
+                </div>
+              </form>
+            </section>
+          </div>
+        </div>
+        <ul class="icons">
+          <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+          <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+          <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+          <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+          <li><a href="#" class="icon brands fa-google-plus-g"><span class="label">Google+</span></a></li>
+        </ul>
+        <div class="copyright">
+          <ul class="menu">
+            <li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="js/email.js"></script>
+    <script src="js/scholarship-apply.js"></script>
+    <script>
+      // Robust DOB picker: open native picker on label click or on input focus (showPicker where supported).
+      (function(){
+        var dob = document.getElementById('dob');
+        var dobLabel = document.getElementById('dobLabel');
+        if (!dob) return;
+
+        // Clicking the label opens the picker (prevents accidental outer clicks triggering it)
+        if (dobLabel) {
+          dobLabel.addEventListener('click', function(e){
+            e.preventDefault();
+            try {
+              if (typeof dob.showPicker === 'function') dob.showPicker();
+              else dob.focus();
+            } catch (err) { dob.focus(); }
+          });
+
+          // Support keyboard activation on the focusable label (Enter / Space)
+          dobLabel.addEventListener('keydown', function(e){
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              dobLabel.click();
+            }
+          });
+        }
+
+        // When the date input receives focus, try to open the picker on supporting browsers.
+        dob.addEventListener('focus', function(){
+          try { if (typeof dob.showPicker === 'function') dob.showPicker(); } catch (err) {}
+        });
+      })();
+    </script>
+  </body>
+</html>
