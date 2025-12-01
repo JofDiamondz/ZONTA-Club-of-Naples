@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Zonta Club of Naples - Checkout</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+  </head>
+  <body class="is-preload">
+    <div id="page-wrapper">
+
+      <!-- Header (same as other pages, but "Store" not highlighted) -->
+      <div id="header">
+        <h1 id="logo"><a href="index.html">Zonta Club of Naples</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="membership.html">Membership</a></li>
+            <li><a href="scholarships.html">Scholarships</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Main -->
+      <section class="wrapper style1">
+        <div class="container">
+          <div id="content">
+            <article>
+              <header class="major">
+                <h2>Checkout</h2>
+                <p>Review your order before proceeding to payment.</p>
+              </header>
+
+              <section class="box">
+                <h3>Order Summary</h3>
+                <div id="checkout-items">
+                  <p class="small">Loading your cart...</p>
+                </div>
+                <p id="checkout-total"><strong>Total: $0.00</strong></p>
+              </section>
+
+              <section class="box">
+                <h3>Payment (Demo)</h3>
+                <p class="small">
+                  This is a demo checkout. In a real deployment, this step would send you to a
+                  secure payment provider (such as Stripe or PayPal) to complete your purchase.
+                </p>
+                <ul class="actions">
+                  <li><a href="store.html" class="button alt">Back to Store</a></li>
+                  <li><a href="index.html" class="button">Return Home</a></li>
+                </ul>
+              </section>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer (copy from store.html) -->
+      <!-- ... same footer markup as store.html ... -->
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const itemsEl = document.getElementById('checkout-items');
+        const totalEl = document.getElementById('checkout-total');
+
+        let saved = localStorage.getItem('zontaCart');
+        if (!saved) {
+          itemsEl.innerHTML = '<p class="small">Your cart is empty.</p>';
+          return;
+        }
+
+        let cart;
+        try {
+          cart = JSON.parse(saved);
+        } catch (e) {
+          cart = [];
+        }
+
+        if (!cart || !cart.length) {
+          itemsEl.innerHTML = '<p class="small">Your cart is empty.</p>';
+          return;
+        }
+
+        let html = '<ul class="small">';
+        let total = 0;
+
+        cart.forEach(item => {
+          const lineTotal = item.price * item.qty;
+          total += lineTotal;
+          html += `<li>${item.name} (x${item.qty}) - $${lineTotal.toFixed(2)}</li>`;
+        });
+
+        html += '</ul>';
+
+        itemsEl.innerHTML = html;
+        totalEl.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
+      });
+    </script>
+  </body>
+</html>
