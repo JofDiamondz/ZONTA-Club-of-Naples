@@ -1,24 +1,33 @@
-.cart-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 320px;
-  max-width: 80%;
-  height: 100%;
-  background: #ffffff;
-  box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 9999;
+/* Payment form enhancements */
+.payment-form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
 }
 
-.cart-drawer.open {
-  transform: translateX(0);
+.payment-form input[type="text"],
+.payment-form input[type="email"] {
+  width: 100%;
 }
 
-.cart-drawer-inner {
-  padding: 1.5rem;
-  overflow-y: auto;
-  height: 100%;
+.payment-form .required {
+  color: #c0392b;
+  margin-left: 0.2rem;
+}
+
+/* Subtle card-style boxes for totals and payment */
+#payment-total {
+  font-size: 1.1rem;
+}
+
+section.box h3 {
+  margin-bottom: 0.75rem;
+}
+
+/* Slightly narrow the form on large screens */
+@media screen and (min-width: 980px) {
+  .payment-form .row.gtr-50 {
+    max-width: 800px;
+  }
 }
 
