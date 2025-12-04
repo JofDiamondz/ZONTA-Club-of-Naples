@@ -31,3 +31,14 @@ section.box h3 {
   }
 }
 
+/* Site logo in header */
+.site-logo {
+  height: 42px; /* matches typical header height */
+  width: auto;
+  vertical-align: middle;
+  margin-right: 0.6rem;
+  display: inline-block;
+}
+
+/* Ensure header link centers content vertically */
+#header #logo a { display: inline-flex; align-items: center; }
